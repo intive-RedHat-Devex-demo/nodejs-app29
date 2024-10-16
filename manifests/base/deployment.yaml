@@ -1,0 +1,30 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nodejs-app29
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs-app29
+  template:
+    metadata:
+      labels:
+        app: nodejs-app29
+        app.kubernetes.io/component: backstage
+        backstage.io/kubernetes-id: demo-dev
+        argocd.argoproj.io/instance: nodejs-app29
+        argocd/app-name: nodejs-app29
+        argocd/app-selector: nodejs-app29
+    spec:
+      containers:
+        - name: nodejs-app29
+          image: image-registry.openshift-image-registry.svc:5000/rhdh/nodejs-app29:latest
+          ports:
+            - name: http-3000
+              containerPort: 3000
+              protocol: TCP
+          resources:
+            limits:
+              memory: '128Mi'
+              cpu: '500m'
